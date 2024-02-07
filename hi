@@ -1,0 +1,66 @@
+#include <iostream>
+#include <limits> // for numeric_limits
+using namespace std;
+
+int main() {
+    int numSemesters;
+
+    // Input validation loop to ensure a valid number of semesters is entered
+    do {
+        cout << "Enter the number of semesters: ";
+        cin >> numSemesters;
+
+        // Clear input buffer in case of non-integer input
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (numSemesters <= 0) {
+            cout << "Invalid input. Please enter a positive integer.\n";
+        }
+    } while (numSemesters <= 0);
+
+    float totalCredits = 0;
+    float totalPoints = 0;
+
+    for (int i = 0; i < numSemesters; ++i) {
+        float semesterGPA, credits;
+
+        // Input validation loop for GPA
+        do {
+            cout << "Enter GPA for Semester " << i + 1 << ": ";
+            cin >> semesterGPA;
+
+            // Clear input buffer in case of non-numeric input
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            if (semesterGPA < 0 || semesterGPA > 4) {
+                cout << "Invalid GPA. Please enter a GPA between 0 and 4.\n";
+            }
+        } while (semesterGPA < 0 || semesterGPA > 4);
+
+        // Input validation loop for credits
+        do {
+            cout << "Enter total credits for Semester " << i + 1 << ": ";
+            cin >> credits;
+
+            // Clear input buffer in case of non-numeric input
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            if (credits <= 0) {
+                cout << "Invalid credits. Please enter a positive number.\n";
+            }
+        } while (credits <= 0);
+
+        totalCredits += credits;
+        totalPoints += credits * semesterGPA;
+    }
+
+    float cgpa = totalPoints / totalCredits;
+
+    // Output CGPA with 2 decimal places
+    cout << "Your CGPA is: " << fixed << setprecision(2) << cgpa << endl;
+
+    return 0;
+}
